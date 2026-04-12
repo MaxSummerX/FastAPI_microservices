@@ -5,8 +5,12 @@ services:
       - "127.0.0.1:8001:8000"
     environment:
       DATABASE_URL: sqlite+aiosqlite:///./data/posts.db
+      CATEGORIES_SERVICE_URL: http://category_service:8000
     volumes:
       - posts_db_data:/app/data
+    depends_on:
+      category_service:
+        condition: service_started
 
   category_service:
     build: ./categories_service
