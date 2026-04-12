@@ -14,9 +14,14 @@ router = APIRouter(
 
 @router.get("/", response_model=list[Post])
 async def read_posts(
-    skip: int = 0, limit: int = 100, post_service: PostService = Depends(get_post_service)
+    category_id: int | None = None,
+    skip: int = 0,
+    limit: int = 100,
+    post_service: PostService = Depends(get_post_service),
 ) -> list[Post]:
     """Получить спискок всех постов"""
+    if category_id is not None:
+        return await post_service.get_posts_by_category(category_id=category_id, skip=skip, limit=limit)
     post = await post_service.get_all_posts(skip=skip, limit=limit)
     return post
 
