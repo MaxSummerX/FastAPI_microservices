@@ -19,7 +19,7 @@ class CategoryRepository:
         return result
 
     async def get_all(self, skip: int = 0, limit: int = 100) -> Sequence[Category]:
-        result = await self.db.scalars(select(Category).offset(skip).offset(limit))
+        result = await self.db.scalars(select(Category).offset(skip).limit(limit))
         return result.all()
 
     async def create(self, name: str) -> Category:
