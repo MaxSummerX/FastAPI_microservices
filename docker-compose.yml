@@ -1,0 +1,22 @@
+services:
+  posts_service:
+    build: ./posts_service
+    ports:
+      - "127.0.0.1:8001:8000"
+    environment:
+      DATABASE_URL: sqlite+aiosqlite:///./data/posts.db
+    volumes:
+      - posts_db_data:/app/data
+
+  category_service:
+    build: ./categories_service
+    ports:
+      - "127.0.0.1:8002:8000"
+    environment:
+      DATABASE_URL: sqlite+aiosqlite:///./data/categories.db
+    volumes:
+      - categories_db_data:/app/data
+
+volumes:
+  posts_db_data:
+  categories_db_data:
